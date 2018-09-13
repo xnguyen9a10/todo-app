@@ -1,0 +1,49 @@
+ <% include ../partials/header %>
+ <div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">Let's to do somthing</h1>
+    <p class="lead">do not waste your time</p>
+  </div>
+</div>
+ <div class="container">
+        <lable>Type some thing to do: </lable>
+        <form action="/todos" method="post">
+            <input type="text" name="description" >
+            <button class="btn btn-primary">Submit</button>
+        </form>
+         <h3>Something need to do: </h3>
+        <% Todo.forEach(function(todo){ %>
+        <%if (currentUser && todo.author.id.equals(currentUser._id)){ %>
+            <ul class="list-group">
+               <li class="list-group-item">
+                <form action="/todos/<%=todo._id%>/done" method="POST">
+                    <%=todo.description%> <button class="btn btn-success"> It's done !</button> 
+                </form>
+               </li>
+            </ul>
+            <% } %> 
+         <%  }); %>
+        <h3>Everything you done will displayed below here: </h3>
+        <% DoneTodo.forEach(function(todo){ %>
+        <%if (currentUser && todo.author.id.equals(currentUser._id)){ %>
+        <ul class="list-group">
+               <li class="list-group-item">
+                <form action="/todos/<%=todo._id%>/done" method="POST">
+                    <%=todo.description%>  <button class="btn btn-info"> No, it's not done !</button> 
+                </form>
+                <form action="/todos/<%=todo._id%>/delete?_method=DELETE" method="POST">
+                        <button style="margin-left: 10px" class="btn btn-danger" onclick="myFunction()">Delete</button>
+                        <script>
+                            function myFunction(){
+                                confirm("Do you want to delete ?");
+                            }
+                        </script>
+                </form>
+            </li>
+        </ul>
+          <% } %> 
+        <% }); %>
+        </div>
+        </div>
+    </body>
+</html>
