@@ -31,7 +31,8 @@ app.use(function(req,res,next){
     next();
 });
 //==============================
-mongoose.connect('mongodb://localhost:27017/to-do-list',{ useNewUrlParser: true });
+const url = process.env.databaseUrl || 'mongodb://localhost:27017/to-do-list'
+mongoose.connect(url,{ useNewUrlParser: true });
 app.set("view engine","ejs");
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(todoRoutes);
